@@ -9,7 +9,7 @@ public class Player {
         this.name = name;
     }
 
-    MoveType getMove(Scanner scanner) {
+    public MoveType inputMove(Scanner scanner) {
         System.out.print(name + "'s move: ");
 
         String input = scanner.nextLine();
@@ -18,26 +18,13 @@ public class Player {
             case "cooperate" -> MoveType.Cooperate;
             case "defect" -> MoveType.Defect;
 
-            default -> getMove(scanner);
+            default -> {
+                System.out.println("Please enter a valid move (cooperate/defect)");
+                yield inputMove(scanner);
+            }
         };
 
-        System.out.println();
-
         return moveType;
-    }
-
-    void updateScore(Player other) {
-        if (moveType == MoveType.Cooperate && other.getMove() == MoveType.Cooperate) {
-            score += 3;
-            other.score += 3;
-        } else if (moveType == MoveType.Defect && other.getMove() == MoveType.Defect) {
-            score += 1;
-            other.score += 1;
-        } else {
-            if (moveType == MoveType.Defect) {
-                score += 5;
-            }
-        }
     }
 
     public MoveType getMove() {
